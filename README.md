@@ -18,6 +18,8 @@ packages:
 
 ## ICS servo motors
 
+![KRS-4031HV ICS](http://kondo-robot.com/w/wp-content/uploads/03048_11-400x400.jpg)
+
 - [KRS-4031HV ICS](http://kondo-robot.com/product/krs-4031hv-ics)
 - [KRS-4032HV ICS](http://kondo-robot.com/product/krs-4032hv-ics)
 
@@ -30,6 +32,8 @@ The other KRS series servo motors are not checked with this package.
 
 Two USB-ICS adapters are available on the Kondo's on-line store. Both
 adapters use the FTD232RL chip to interact with servo motors.
+
+![Dual USB adapter HS](http://kondo-robot.com/w/wp-content/uploads/021161-400x400.jpg)
 
 * [ICS USB Adapter HS](http://kondo-robot.com/product/02116)
 * [Dual USB Adapter HS](http://www.kopropo.co.jp/sys/archives/4315)
