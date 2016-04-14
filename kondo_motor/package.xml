@@ -1,0 +1,22 @@
+<package>
+  <name>kondo_motor</name>
+  <version>0.0.0</version>
+  <description>
+    This stack contains the ros_control drivers with Kondo kagaku ICS
+    servo motors.
+  </description>
+  <maintainer email="ryosuke.tajima@gmail.com">Ryosuke Tajima</maintainer>
+
+  <license>BSD</license>
+
+  <author>Ryosuke Tajima</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>kondo_msgs</run_depend>
+  <run_depend>kondo_driver</run_depend>
+
+  <export>
+    <metapackage/>
+  </export>
+</package>

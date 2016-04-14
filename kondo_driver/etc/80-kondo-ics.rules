@@ -1,0 +1,2 @@
+# set permission to all Kondo device
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="165c", MODE="0666"

@@ -1,0 +1,26 @@
+<launch>
+  <!-- Load Kondo ICS parameters -->
+  <rosparam file="$(find kondo_driver)/config/driver_sample.yaml" command="load" ns="kondo_driver"/>
+
+  <!-- Start ICS driver -->
+  <node name="kondo_driver" pkg="kondo_driver" type="kondo_driver_node" args="servo_0" output="screen">
+    <param name="device" value="/dev/ttyUSB0"/>
+    <param name="loopback" value="false"/>
+  </node>
+
+  <!-- Load URDF model -->
+  <param name="robot_description" command="cat $(find kondo_driver)/urdf/sample.urdf" />
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find kondo_driver)/config/controller_sample.yaml" command="load"/>
+
+  <!-- Load the position controller -->
+  <!-- <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="--shutdown-timeout 0.1 joint_state_controller joint_0_position_controller"/> -->
+
+  <!-- Load the velocity controller -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="--shutdown-timeout 0.1 joint_state_controller joint_0_velocity_controller"/>
+
+  <!-- Robot state publisher -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen" />
+
+</launch>

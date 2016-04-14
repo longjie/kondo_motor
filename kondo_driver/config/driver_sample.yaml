@@ -1,0 +1,19 @@
+servo_0:
+  id: 0
+  joint_name: joint_0
+  min_angle: -135
+  max_angle:  135
+  stretch: 60
+  speed: 127
+  current_limit: 30
+  temperature_limit: 80
+
+servo_1:
+  id: 1
+  joint_name: joint_1
+  min_angle: -135
+  max_angle:  135
+  stretch: 60
+  speed: 127
+  current_limit: 30
+  temperature_limit: 80

@@ -1,0 +1,4 @@
+# kondo ics driver setting
+ACTION=="add",SUBSYSTEMS=="usb",ATTRS{idVendor}=="165c",ATTRS{idProduct}=="0008",RUN+="chmod 666 /sys/bus/usb-serial/drivers/ftdi_sio/new_id;",RUN+="echo 165c 0008 > /sys/bus/usb-serial/drivers/ftdi_sio/new_id;"
+
+SUBSYSTEMS=="usb",ATTRS{idVendor}=="165c",ATTRS{idProduct}=="0008",MODE="666"
