@@ -60,54 +60,27 @@ void KondoDriver::update(void)
 }
 
 /**
- * @brief Check if the controller can start
+ * @brief Switch the controller one to another
+ *
  */
-bool KondoDriver::canSwitch(const std::list<hardware_interface::ControllerInfo>& start_list,
-                                const std::list<hardware_interface::ControllerInfo>& stop_list)
-{
-  ROS_INFO("canSwitch: ");
-  std::list < hardware_interface::ControllerInfo >::const_iterator info;
-  for (info = start_list.begin(); info != start_list.end(); info++) {
-    ROS_INFO("(%s, %s, %s) ", info->name.c_str(), info->type.c_str(), info->hardware_interface.c_str());
-  }
-#if 0
-  ros::NodeHandle nh("~");
-  std::list < hardware_interface::ControllerInfo >::const_iterator info;
-  for (info = start_list.begin(); info != start_list.end(); info++) {
-    for (std::set < std::string >::const_iterator it = info->resources.begin(); it != info->resources.end(); ++it) {
-      for (int i = 0; i < actuator_vector.size(); i++) {
-        if (actuator_vector[i]->joint_name == *it) {
-          nh.getParam
-
-    }
-    ROS_INFO("(%s, %s, %s) ", info->name.c_str(), info->type.c_str(), info->hardware_interface.c_str());
-  }
-  ROS_INFO("stop_list\n");
-  for (info = stop_list.begin(); info != stop_list.end(); info++) {
-    ROS_INFO("(%s, %s, %s) ", info->name.c_str(), info->type.c_str(), info->hardware_interface.c_str());
-  }
-#endif
-  return true;
-}
-
 void KondoDriver::doSwitch(const std::list < hardware_interface::ControllerInfo > &start_list,
 			   const std::list < hardware_interface::ControllerInfo > &stop_list)
 {
-  ROS_INFO("doSwitch: ");
   std::list < hardware_interface::ControllerInfo >::const_iterator info;
+
+  // set the KondoMotor's controller type as the started controller
   for (info = start_list.begin(); info != start_list.end(); info++) {
-    ROS_INFO("(%s, %s, %s) ", info->name.c_str(), info->type.c_str(), info->hardware_interface.c_str());
     for (int i = 0; i < actuator_vector.size(); i++) {
       for (std::set < std::string >::const_iterator resource_it = info->resources.begin();
 	   resource_it != info->resources.end(); ++resource_it) {
 	if (actuator_vector[i]->joint_name == *resource_it) {
-	  ROS_INFO("controller of %s changed to %s", actuator_vector[i]->joint_name.c_str(), info->type.c_str());
+          ROS_INFO("controller of %s changed to %s", actuator_vector[i]->joint_name.c_str(), info->type.c_str());
 	  if (info->type == "position_controllers/JointPositionController") {
 	    actuator_vector[i]->controller_type = 0;
 	  } else if (info->type == "velocity_controllers/JointVelocityController") {
 	    actuator_vector[i]->controller_type = 1;
 	  } else {
-	    ROS_INFO("invalid controller %s for %s", info->type.c_str(), actuator_vector[i]->joint_name.c_str());
+	    ROS_WARN("invalid controller %s for %s", info->type.c_str(), actuator_vector[i]->joint_name.c_str());
 	  }
 	}
       }

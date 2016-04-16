@@ -15,10 +15,10 @@
   <rosparam file="$(find kondo_driver)/config/controller_sample.yaml" command="load"/>
 
   <!-- Load the position controller -->
-  <!-- <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="--shutdown-timeout 0.1 joint_state_controller joint_0_position_controller"/> -->
+  <node if="false" name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="--shutdown-timeout 0.1 joint_state_controller joint_0_position_controller"/>
 
   <!-- Load the velocity controller -->
-  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="--shutdown-timeout 0.1 joint_state_controller joint_0_velocity_controller"/>
+  <node if="true" name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="--shutdown-timeout 0.1 joint_state_controller joint_0_velocity_controller"/>
 
   <!-- Robot state publisher -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen" />

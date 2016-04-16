@@ -35,8 +35,8 @@ adapters use the FTD232RL chip to interact with servo motors.
 
 ![Dual USB adapter HS](http://kondo-robot.com/w/wp-content/uploads/021161-400x400.jpg)
 
-* [ICS USB Adapter HS](http://kondo-robot.com/product/02116)
-* [Dual USB Adapter HS](http://www.kopropo.co.jp/sys/archives/4315)
+* [ICS USB Adapter HS (product id:0006)](http://www.kopropo.co.jp/sys/archives/4315)
+* [Dual USB Adapter HS (product id:0008](http://kondo-robot.com/product/02116)
 
 # Quick start
 
@@ -44,19 +44,32 @@ adapters use the FTD232RL chip to interact with servo motors.
 
 You need to install ftdi_sio. Currently the KONDO's usb ICS adapters
 are not registered in the driver source code. You can setup the device
-as follow. You need to enter sudo password.
+using a script file as follows. You need to enter sudo password.
 
 ```
 $ rosrun kondo_driver setup_device.sh
 ```
 
+This script installs ftdt_sio module and set the target device IDs
+into /sys/bus/usb-serial/drivers/ftdi_sio/new_id. After this
+procedure, you should see /dev/ttyUSB* device file when the device is
+connected.
+
 ## Setting servo ID.  
 
-Connect each servo and the adapter one to one.
-For setting servo ID, you can use ics_set_id.
+Connect each servo and the adapter one to one.  To set the servo
+ID, you can use ics_set_id.
 
 ```
-$ rosrun ics_set_id <-d /dev/ttyUSB0> <-i id>
+$ rosrun kondo_driver set_ics_id <-d /dev/ttyUSB0> <-i id>
+```
+
+If you want to set the ID as 2,
+
+```
+$ rosrun kondo_driver set_ics_id -i 2
+Current servo ID: 0
+Set servo ID correctly: 2
 ```
 
 After setting the id of each servo motor, you can connect your motors

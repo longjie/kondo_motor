@@ -5,43 +5,21 @@
  */
 #include "kondo_driver/kondo_motor.h"
 
-bool KondoMotor::set_power(kondo_msgs::setPower::Request & req, kondo_msgs::setPower::Response & res)
-{
-  motor_power = req.request;
-  res.result = req.request;
-  if (req.request) {
-    ROS_INFO("KondoMotor[%d]: set_power: ON", id);
-  }
-  else {
-    ROS_INFO("KondoMotor[%d]: set_power: OFF", id);
-  }
-  return true;
-}
-
-bool KondoMotor::get_param_from_eeprom(kondo_msgs::getParameters::Request & req, kondo_msgs::getParameters::Response & res)
-{
-  ROS_INFO("%s: id %d, request: %d", __func__, this->id, req.request);
-  get_param_from_eeprom();
-  res.result = true;
-  return true;
-}
-
 /**
  * @brief constructor of KondoMotor
- * @param ics File descriptor of ics device file
+ * @param ics File descriptor of ICS device file
  * @param name name of the actuator
- * @param state_interface State interface for the motor
- * @param pos_interface Position interface for the motor
- * @param vel_interface Velocity interface for the motor
+ * @param joint_state_interface State interface for the corresponding joint
+ * @param position_joint_interface Position interface for the corresponding joint
+ * @param velocity_joint_interface Velocity interface for the corresponding joint
  */
 KondoMotor::KondoMotor(int ics,
                        std::string name,
 		       hardware_interface::JointStateInterface & joint_state_interface,
 		       hardware_interface::PositionJointInterface & position_joint_interface,
 		       hardware_interface::VelocityJointInterface & velocity_joint_interface, bool loopback = false)
-:  round(0), pos_prev(0), pos_curr(0), cmd_vel(0), pos(0), vel(0), eff(0), skip_count(0), controller_type(0)
+  :  ics(ics), round(0), pos_prev(0), pos_curr(0), cmd_vel(0), pos(0), vel(0), eff(0), skip_count(0), controller_type(0)
 {
-  this->ics = ics;
   this->loopback = loopback;
   this->motor_power = false;
   motor_name = name;
@@ -184,6 +162,27 @@ void KondoMotor::update(void)
   } else {
     ROS_INFO("invalid control type %d", controller_type);
   }
+}
+
+bool KondoMotor::set_power(kondo_msgs::setPower::Request & req, kondo_msgs::setPower::Response & res)
+{
+  motor_power = req.request;
+  res.result = req.request;
+  if (req.request) {
+    ROS_INFO("KondoMotor[%d]: set_power: ON", id);
+  }
+  else {
+    ROS_INFO("KondoMotor[%d]: set_power: OFF", id);
+  }
+  return true;
+}
+
+bool KondoMotor::get_param_from_eeprom(kondo_msgs::getParameters::Request & req, kondo_msgs::getParameters::Response & res)
+{
+  ROS_INFO("%s: id %d, request: %d", __func__, this->id, req.request);
+  get_param_from_eeprom();
+  res.result = true;
+  return true;
 }
 
 /**
