@@ -66,13 +66,16 @@ void KondoDriver::update(void)
 void KondoDriver::doSwitch(const std::list < hardware_interface::ControllerInfo > &start_list,
 			   const std::list < hardware_interface::ControllerInfo > &stop_list)
 {
+  // need to be fixed.
+#if 0
+  
   std::list < hardware_interface::ControllerInfo >::const_iterator info;
 
   // set the KondoMotor's controller type as the started controller
   for (info = start_list.begin(); info != start_list.end(); info++) {
     for (int i = 0; i < actuator_vector.size(); i++) {
-      for (std::set < std::string >::const_iterator resource_it = info->resources.begin();
-	   resource_it != info->resources.end(); ++resource_it) {
+      for (std::set < std::string >::const_iterator resource_it = info->claimed_resources.begin();
+	   resource_it != info->claimed_resources.end(); ++resource_it) {
 	if (actuator_vector[i]->joint_name == *resource_it) {
           ROS_INFO("controller of %s changed to %s", actuator_vector[i]->joint_name.c_str(), info->type.c_str());
 	  if (info->type == "position_controllers/JointPositionController") {
@@ -86,4 +89,6 @@ void KondoDriver::doSwitch(const std::list < hardware_interface::ControllerInfo 
       }
     }
   }
+#endif
+  
 }
