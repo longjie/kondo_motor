@@ -126,9 +126,10 @@ void KondoMotor::update_velocity(void)
   if (loopback) {
     vel = cmd_vel;
     eff = 0;
+    // Simulated motion
+    pos += cmd_vel * 0.01;
   } else {
-    int r,
-	pulse_ret = 0;
+    int r, pulse_ret = 0;
     if (ics_set_pulse(ics, id, pulse_cmd, &pulse_ret) == 0) {
       int n;
       n = skip_count % FLIP_STEP;
@@ -191,7 +192,6 @@ bool KondoMotor::get_param_from_eeprom(kondo_msgs::getParameters::Request & req,
 void KondoMotor::get_param_from_eeprom(void)
 {
   ros::NodeHandle nh("~" + motor_name + "/eeprom");
-  uint8_t eeprom[64];
   if (ics_get_eeprom(ics, 0, eeprom) < 0) {
     ROS_ERROR("Cannot get param from EEPROM");
     return;
@@ -213,7 +213,7 @@ void KondoMotor::get_param_from_eeprom(void)
 }
 
 /**
- * @brief Set paramter to the EEPROM of the motor
+ * @brief Set paramters to the EEPROM of the motor
  */
 void KondoMotor::set_param_to_eeprom(void)
 {

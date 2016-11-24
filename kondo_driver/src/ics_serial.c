@@ -406,6 +406,10 @@ uint8_t ics_eeprom_safe_timer(uint8_t* eeprom)
   return (eeprom[12] << 4) | (eeprom[13] & 0x0f);
 }
 
+void ics_eeprom_set_flag(uint8_t* eeprom, uint8_t flag)
+{
+}
+
 uint8_t ics_eeprom_flag (uint8_t* eeprom)
 {
   return (eeprom[14] << 4) | (eeprom[15] & 0x0f);
@@ -426,6 +430,11 @@ uint16_t ics_eeprom_min_pulse (uint8_t* eeprom)
 uint8_t ics_eeprom_baud_rate (uint8_t* eeprom)
 {
   return (eeprom[26] & 0x0f) << 4 | (eeprom[27] & 0x0f);
+}
+
+void ics_eeprom_set_baud_rate (uint8_t* eeprom, uint8_t baud_rate)
+{
+  // return (eeprom[26] & 0x0f) << 4 | (eeprom[27] & 0x0f);
 }
 
 uint8_t ics_eeprom_max_temperature (uint8_t* eeprom)

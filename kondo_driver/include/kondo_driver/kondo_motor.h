@@ -27,6 +27,9 @@ inline double pulse_to_radian (double pulse)
   return (pulse - CNT_PULSE) * RADIAN_PER_PULSE;
 }
 
+/**
+ * @brief convert the angle radian to servo pulse value
+ */
 inline int radian_to_pulse (double radian)
 {
   return CNT_PULSE + radian / RADIAN_PER_PULSE;
@@ -49,8 +52,10 @@ private:
   int temp_limit; /// temperature limit parameter [deg. of cersius]
   int min_angle; /// joint minimum angle [deg]
   int max_angle; /// joint maximum angle [deg]
+  uint8_t eeprom[64]; /// EEPROM buffer of the ICS servo motor
+
   ros::ServiceServer power_service; /// setPower service
-  ros::ServiceServer get_param_service; /// setPower service
+  ros::ServiceServer get_param_service; /// getParam service
 
 public:
   double cmd_pos; /// inteface value from joint position controller

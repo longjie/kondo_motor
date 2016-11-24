@@ -53,6 +53,7 @@ int main(int argc, char **argv)
     perror ("open");
     exit (1);
   }
+  // set servo ID
   int id = ics_get_id (ics_fd);
   fprintf (stderr, "Current servo ID: %d\n", id);
 
